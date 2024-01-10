@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,7 +21,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: HomeView
+      component: LoginView
     },
     {
       path: '/dashboard',
@@ -30,7 +31,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(async (to, from, next) => {
+/* router.beforeEach(async (to, from, next) => {
   if (
     // make sure the user is authenticated
     !isAuthenticated &&
@@ -41,7 +42,7 @@ router.beforeEach(async (to, from, next) => {
     return { name: 'Login' }
   }
 })
-
+ */
 function isAuthenticated() {
   // Implement your authentication logic here
   // For example, check if the user is logged in

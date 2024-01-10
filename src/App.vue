@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import PostCard from './components/posts/PostCard.vue'
 import HelloWorld from './components/HelloWorld.vue'
+import postData from './stories/postData.json'
 </script>
 
 <template>
@@ -10,6 +12,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
+      <PostCard :id="postData[0].id" :content="postData[0].content" :tags="postData[0].tags"  >sdfsdf</PostCard>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
