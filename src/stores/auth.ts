@@ -1,34 +1,42 @@
-import { login } from '@/services/api';
-import { defineStore } from 'pinia';
+import { login } from '@/services/api'
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
 
 interface AuthState {
-  token: string | null;
+  token: string | null
+  isAuthenticated: boolean
 }
 
-export const useAuthStore = defineStore({
-  id: 'auth',
-  state: (): AuthState => ({
+export const useAuthStore = defineStore('auth', () => {
+  const auth = ref<AuthState>({
     token: null,
-  }),
-  getters: {
-    isAuthenticated: (state) => !!state.token,
-  },
-  actions: {
-    async login(this: any, credentials: { username: string; password: string }) {
-        try {
-          const token = await login(credentials);
-          this.setToken(token);
-        } catch (error) {
-          // Handle login error
-        }
-    },  
-    setToken(this: any, token: string) {
-      this.token = token;
-    },
-    clearToken(this: any) {
-      this.token = null;
-    },
-  },
-});
+    isAuthenticated: false
+  })
+  const setAuthToken = (givenJWT: any) => {
+    auth.value.token = givenJWT
+  }
+  const getAuthToken = () => {
+    return auth.value.token
+  }
+  const setAuthState = (state: boolean) => {
+    auth.value.isAuthenticated = state
+  }
+  const fetchAuthToken = async (credentials: any) => {
+    try {
+      const fetchToken = (await login(credentials)).data
+      console.log(fetchToken)
 
-export default useAuthStore;
+      if (fetchToken !== null || fetchToken !== '' || fetchToken !== undefined) {
+        setAuthToken(fetchToken)
+        setAuthState(true)
+      }
+    } catch (e) {
+      alert(e)
+    }
+  }
+  return {
+    auth,
+    fetchAuthToken,
+    getAuthToken
+  }
+})

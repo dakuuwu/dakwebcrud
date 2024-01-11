@@ -2,7 +2,24 @@
 import { RouterLink, RouterView } from 'vue-router'
 import PostCard from './components/posts/PostCard.vue'
 import HelloWorld from './components/HelloWorld.vue'
-import postData from './stories/postData.json'
+import { onBeforeMount, reactive, watch } from 'vue'
+import {usePostsStore} from './stores/postlist'
+onBeforeMount(()=>{
+  const getPosts = async () => {
+        try {
+          await usePostsStore().fetchPostList();
+  
+          // Redirect or perform other actions after successful login
+          // Assuming you have a $router available in your component
+          // You may need to use the router via inject or provide if not available
+        } catch (error) {
+          // Handle login error
+          console.error('Login failed:', error);
+        }
+      };
+      getPosts()
+})
+let posts = usePostsStore().posts
 </script>
 
 <template>
@@ -11,8 +28,8 @@ import postData from './stories/postData.json'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-
-      <PostCard :id="postData[0].id" :content="postData[0].content" :tags="postData[0].tags"  >sdfsdf</PostCard>
+<button @click="console.log(posts)">test</button>
+      <PostCard v-for="a in usePostsStore().posts" :key="a.id" :id="a.id" :content="a.content" :tags="a.tags"  ></PostCard>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>

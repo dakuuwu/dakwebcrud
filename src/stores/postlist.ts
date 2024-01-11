@@ -1,29 +1,73 @@
-import { getPosts } from '@/services/api';
-import { defineStore } from 'pinia';
+import { getPosts, editPost, deletePost } from '@/services/api'
+import { ref, reactive } from 'vue'
+import { defineStore } from 'pinia'
 
-interface postState {
-  post: object | null;
+interface postlistState {
+  post:
+    | [
+        {
+          id: string
+          content: {
+            title: string
+            imageurl: string
+            smalldesc: string
+            longdesc: string
+          }
+          tags: []
+        }
+      ]
+    | []
 }
 
-export const usePostsStore = defineStore({
-  id: 'posts',
-  state: (): postState => ({
-    post: null,
-  }),
-  getters: {
-    isAuthenticated: (state) => !!state.post,
-  },
-  actions: {
-    async getPost() {
-        try { 
-          const res = await getPosts();
-          console.log(JSON.stringify(res));
-          
-        } catch (error) {
-          // Handle login error
-        }
-    },  
-  },
-});
+export const usePostsStore = defineStore('postlist', () => {
+  const posts = reactive<postlistState>([])
+  function getPostFromStore() {
+    return posts.post
+  }
+  const setPostList = (plist: String[]) => {
+    if (posts.length > 0) {
+      posts.length = 0
+    }
+    posts.push(...plist)
+  }
+  const fetchPostList = async () => {
+    try {
+      const fetchPosts = await getPosts()
+      console.log(JSON.stringify(fetchPosts))
+      setPostList(fetchPosts)
+    } catch (e) {
+      alert(e)
+    }
+  }
+  const putUpdatedPost = async (updatedPost) => {
+    try {
+      const putPost = await editPost(updatedPost)
+      console.log(putPost)
 
-export default usePostsStore;
+      fetchPostList()
+    } catch (e) {
+      alert(e)
+      console.warn(updatedPost)
+    }
+  }
+  const delPost = async (id) => {
+    try {
+      const delPost = await deletePost(id)
+      console.log(delPost)
+
+      fetchPostList()
+    } catch (e) {
+      alert(e)
+      console.warn()
+    }
+  }
+  return {
+    posts,
+    getPostFromStore,
+    fetchPostList,
+    putUpdatedPost,
+    deletePost
+  }
+})
+
+export default usePostsStore
