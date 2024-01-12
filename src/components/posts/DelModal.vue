@@ -9,39 +9,35 @@ import {
 import { useAuthStore } from '../../stores/auth.ts'
 import { usePostsStore } from '../../stores/postlist.ts'
 import { apiClient } from '../../services/api.ts'
-import axios from "axios"
+import axios from 'axios'
 
 const emit = defineEmits(['closeModal'])
 
 const delPost = async (id) => {
-
-axios.delete(
-    'http://localhost:8080/deletepost/' + id,
-    {
+  axios
+    .delete('http://localhost:8080/deletepost/' + id, {
       headers: {
-        ["Authorization"]: `Bearer ${useAuthStore().auth.token}`
+        ['Authorization']: `Bearer ${useAuthStore().auth.token}`
       }
-    }
-)
-  .then((res) => {
-    if (res.status === 204) {
-      apiClient
-        .get('/posts')
-        .then((res) => {
-          if (res.status === 200) {
-            usePostsStore().setPostList(res.data)
-          }
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-    }
-  })
-  .catch((err) => {
-    console.error(err)
-  })
+    })
+    .then((res) => {
+      if (res.status === 204) {
+        apiClient
+          .get('/posts')
+          .then((res) => {
+            if (res.status === 200) {
+              usePostsStore().setPostList(res.data)
+            }
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 }
-
 
 const closeModal = () => {
   emit('closeModal')
@@ -69,7 +65,11 @@ const props = defineProps({
         <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
           <DialogPanel class="flex-col gap-5 flex w-full max-w-md rounded-xl bg-white p-4">
             <DialogTitle class="text-2xl font-semibold">Delete this post?</DialogTitle>
-            <DialogDescription> This will <b>permanently</b> delete the post with title <i>"{{props.postTitle}}"</i> and ID: <i>{{ props.deletionID }}</i>. </DialogDescription>
+            <DialogDescription>
+              This will <b>permanently</b> delete the post with title
+              <i>"{{ props.postTitle }}"</i> and ID: <i>{{ props.deletionID }}</i
+              >.
+            </DialogDescription>
             <div class="flex gap-4 justify-end">
               <button
                 class="p-2 rounded-xl bg-red-600 text-white font-semibold"

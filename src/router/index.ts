@@ -10,7 +10,7 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
-      meta: { transition: 'fade' },
+      meta: { transition: 'fade' }
     },
     {
       path: '/dashboard',
@@ -20,29 +20,17 @@ const router = createRouter({
   ]
 })
 
-/* router.beforeEach(async (to) => {
-  if (
-    // make sure the user is authenticated
-    !useAuthStore().auth.isAuthenticated &&
-    // ❗️ Avoid an infinite redirect
-    to.name !== 'login'
-  ) {
-    // redirect the user to the login page
+router.beforeEach(async (to) => {
+  if (!useAuthStore().auth.isAuthenticated && to.name !== 'login') {
     return { name: 'login' }
   }
 })
 
+//Stop navigation if person tries to return to login manually
 router.beforeEach(async (to) => {
-  if (
-    // make sure the user is authenticated
-    useAuthStore().auth.isAuthenticated &&
-    // ❗️ Avoid an infinite redirect
-    to.name == 'login'
-  ) {
-    // redirect the user to the login page
+  if (useAuthStore().auth.isAuthenticated && to.name == 'login') {
     return false
   }
-}) */
-
+})
 
 export default router

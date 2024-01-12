@@ -3,7 +3,6 @@ import { toRaw } from 'vue'
 
 export const apiClient = axios.create({
   baseURL: 'http://localhost:8080'
-
 })
 
 apiClient.interceptors.request.use((config) => {

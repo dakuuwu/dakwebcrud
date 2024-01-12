@@ -10,7 +10,7 @@ import { ref } from 'vue'
 import { useAuthStore } from '../../stores/auth.ts'
 import { usePostsStore } from '../../stores/postlist.ts'
 import { apiClient } from '../../services/api.ts'
-import axios from "axios"
+import axios from 'axios'
 
 const emit = defineEmits(['closeModal'])
 
@@ -24,21 +24,47 @@ const title = ref('')
 const imageurl = ref('')
 const smalldesc = ref('')
 const longdesc = ref('')
-const tags = ref("")
-const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
+const tags = ref('')
 
-    axios.post(
+function titleVerifier(title) {
+  if (title.trim() === '') {
+    return 'Untitled'
+  } else {
+    return title
+  }
+}
+function tagsVerifier(tags) {
+  if (tags.trim() === '') {
+    return ['Untagged']
+  } else {
+    return tags.split(',')
+  }
+}
+
+const initializeData = () => {
+  title.value = ''
+  imageurl.value = ''
+  smalldesc.value = ''
+  longdesc.value = ''
+  tags.value = ''
+}
+
+const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
+  axios
+    .post(
       'http://localhost:8080/newpost',
-      { content: {
-      title: title,
-      imageurl: "mockURL/img.png",
-      smalldesc: smalldesc,
-      longdesc: longdesc
-    },
-    tags: tags.split(',') },
+      {
+        content: {
+          title: titleVerifier(title),
+          imageurl: 'mockURL/img.png',
+          smalldesc: smalldesc,
+          longdesc: longdesc
+        },
+        tags: tagsVerifier(tags)
+      },
       {
         headers: {
-          ["Authorization"]: `Bearer ${useAuthStore().auth.token}`
+          ['Authorization']: `Bearer ${useAuthStore().auth.token}`
         }
       }
     )
@@ -80,13 +106,13 @@ const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
             <DialogTitle class="text-2xl font-semibold">Create new post</DialogTitle>
             <form
               @submit.prevent="
-                addPost(title, imageurl, smalldesc, longdesc, tags)
+                addPost(title, imageurl, smalldesc, longdesc, tags), initializeData()
               "
               class="flex flex-col gap-2"
             >
               <div class="flex flex-col">
                 <label for="posttitle">Title:</label>
-                <input v-model="title" type="text" id="title" class="border p-2 rounded" />
+                <input v-model="title" type="text" id="title" class="border p-2 rounded" required />
               </div>
               <div class="flex flex-col">
                 <label for="image">Image:</label>
@@ -114,7 +140,7 @@ const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
                 <button
                   type="submit"
                   class="p-2 rounded-xl bg-green-600 text-white font-semibold"
-                  
+                  @click="closeModal"
                 >
                   Add
                 </button>

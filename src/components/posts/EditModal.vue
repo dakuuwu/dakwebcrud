@@ -9,7 +9,8 @@ import {
 import { useAuthStore } from '../../stores/auth.ts'
 import { usePostsStore } from '../../stores/postlist.ts'
 import { apiClient } from '../../services/api.ts'
-import axios from "axios"
+
+import axios from 'axios'
 
 const emit = defineEmits(['closeModal'])
 
@@ -27,20 +28,37 @@ const smalldesc = props.post.content.smalldesc
 const longdesc = props.post.content.longdesc
 const tags = props.post.tags.toString()
 
-const putPost = async (id, title, imageurl, smalldesc, longdesc, tags) => {
+function titleVerifier(title) {
+  if (title.trim() === '') {
+    return 'Untitled'
+  } else {
+    return title
+  }
+}
+function tagsVerifier(tags) {
+  if (tags.trim() === '') {
+    return ['Untagged']
+  } else {
+    return tags.split(',')
+  }
+}
 
-  axios.put(
+const putPost = async (id, title, imageurl, smalldesc, longdesc, tags) => {
+  axios
+    .put(
       'http://localhost:8080/updatepost/' + id,
-      { content: {
-      title: title,
-      imageurl: "mockURL/img.png",
-      smalldesc: smalldesc,
-      longdesc: longdesc
-    },
-    tags: tags.split(',') },
+      {
+        content: {
+          title: titleVerifier(title),
+          imageurl: 'mockURL/img.png',
+          smalldesc: smalldesc,
+          longdesc: longdesc
+        },
+        tags: tagsVerifier(tags)
+      },
       {
         headers: {
-          ["Authorization"]: `Bearer ${useAuthStore().auth.token}`
+          ['Authorization']: `Bearer ${useAuthStore().auth.token}`
         }
       }
     )
@@ -62,7 +80,6 @@ const putPost = async (id, title, imageurl, smalldesc, longdesc, tags) => {
       console.error(err)
     })
 }
-
 </script>
 
 <template>

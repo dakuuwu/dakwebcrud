@@ -9,7 +9,7 @@ interface AuthState {
 export const useAuthStore = defineStore('auth', () => {
   const auth = reactive<AuthState>({
     token: null,
-    isAuthenticated: false,
+    isAuthenticated: false
   })
   const setAuthToken = (givenJWT: any) => {
     auth.token = givenJWT
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
     auth.isAuthenticated = state
   }
   const getAuthState = () => {
-    return auth.isAuthenticated;
+    return auth.isAuthenticated
   }
 
   return {

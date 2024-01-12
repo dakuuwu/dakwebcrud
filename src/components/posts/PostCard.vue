@@ -63,7 +63,12 @@ const post = defineProps<Posts>()
         </div>
       </div>
     </div>
-    <DelModal :toggle="delModalOpen" :deletionID="post.id" :postTitle="post.content.title" @closeModal="toggleDelModal" />
+    <DelModal
+      :toggle="delModalOpen"
+      :deletionID="post.id"
+      :postTitle="post.content.title"
+      @closeModal="toggleDelModal"
+    />
     <EditModal :toggle="editModalOpen" :post="post" @closeModal="toggleEditModal" />
   </div>
 </template>
