@@ -1,5 +1,4 @@
-import { login } from '@/services/api'
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 interface AuthState {
@@ -8,35 +7,28 @@ interface AuthState {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-  const auth = ref<AuthState>({
+  const auth = reactive<AuthState>({
     token: null,
-    isAuthenticated: false
+    isAuthenticated: false,
   })
   const setAuthToken = (givenJWT: any) => {
-    auth.value.token = givenJWT
+    auth.token = givenJWT
   }
   const getAuthToken = () => {
-    return auth.value.token
+    return auth.token
   }
   const setAuthState = (state: boolean) => {
-    auth.value.isAuthenticated = state
+    auth.isAuthenticated = state
   }
-  const fetchAuthToken = async (credentials: any) => {
-    try {
-      const fetchToken = (await login(credentials)).data
-      console.log(fetchToken)
+  const getAuthState = () => {
+    return auth.isAuthenticated;
+  }
 
-      if (fetchToken !== null || fetchToken !== '' || fetchToken !== undefined) {
-        setAuthToken(fetchToken)
-        setAuthState(true)
-      }
-    } catch (e) {
-      alert(e)
-    }
-  }
   return {
     auth,
-    fetchAuthToken,
-    getAuthToken
+    setAuthToken,
+    setAuthState,
+    getAuthToken,
+    getAuthState
   }
 })

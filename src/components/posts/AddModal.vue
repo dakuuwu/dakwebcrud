@@ -6,6 +6,7 @@ import {
   DialogTitle,
   DialogDescription
 } from '@headlessui/vue'
+import { ref } from 'vue'
 import { useAuthStore } from '../../stores/auth.ts'
 import { usePostsStore } from '../../stores/postlist.ts'
 import { apiClient } from '../../services/api.ts'
@@ -17,20 +18,17 @@ const closeModal = () => {
   emit('closeModal')
 }
 const props = defineProps({
-  toggle: Boolean,
-  post: Object
+  toggle: Boolean
 })
-const id = props.post.id
-const title = props.post.content.title
-const imageurl = 'mockURL/image.png'
-const smalldesc = props.post.content.smalldesc
-const longdesc = props.post.content.longdesc
-const tags = props.post.tags.toString()
+const title = ref('')
+const imageurl = ref('')
+const smalldesc = ref('')
+const longdesc = ref('')
+const tags = ref("")
+const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
 
-const putPost = async (id, title, imageurl, smalldesc, longdesc, tags) => {
-
-  axios.put(
-      'http://localhost:8080/updatepost/' + id,
+    axios.post(
+      'http://localhost:8080/newpost',
       { content: {
       title: title,
       imageurl: "mockURL/img.png",
@@ -45,7 +43,7 @@ const putPost = async (id, title, imageurl, smalldesc, longdesc, tags) => {
       }
     )
     .then((res) => {
-      if (res.status === 200) {
+      if (res.status === 201) {
         apiClient
           .get('/posts')
           .then((res) => {
@@ -62,7 +60,6 @@ const putPost = async (id, title, imageurl, smalldesc, longdesc, tags) => {
       console.error(err)
     })
 }
-
 </script>
 
 <template>
@@ -80,12 +77,11 @@ const putPost = async (id, title, imageurl, smalldesc, longdesc, tags) => {
       <div class="fixed inset-0 bg-black/30" aria-hidden="true">
         <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
           <DialogPanel class="flex-col gap-5 flex w-full max-w-md rounded-xl bg-white p-4">
-            <DialogTitle class="text-2xl font-semibold">Edit post details</DialogTitle>
-            <DialogDescription class="text-sm italic">
-              Editing the post with id: {{ id }}
-            </DialogDescription>
+            <DialogTitle class="text-2xl font-semibold">Create new post</DialogTitle>
             <form
-              @submit.prevent="putPost(id, title, imageurl, smalldesc, longdesc, tags)"
+              @submit.prevent="
+                addPost(title, imageurl, smalldesc, longdesc, tags)
+              "
               class="flex flex-col gap-2"
             >
               <div class="flex flex-col">
@@ -117,10 +113,10 @@ const putPost = async (id, title, imageurl, smalldesc, longdesc, tags) => {
               <div class="flex gap-4 justify-end">
                 <button
                   type="submit"
-                  class="p-2 rounded-xl bg-yellow-700 text-white font-semibold"
-                  @click="closeModal"
+                  class="p-2 rounded-xl bg-green-600 text-white font-semibold"
+                  
                 >
-                  Edit
+                  Add
                 </button>
                 <button
                   type="button"

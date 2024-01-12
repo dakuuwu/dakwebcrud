@@ -1,21 +1,13 @@
 import axios from 'axios'
-import { useAuthStore } from '@/stores/auth'
 import { toRaw } from 'vue'
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: 'http://localhost:8080'
 
-  // You can add other configurations here, such as headers or timeout settings
 })
 
-axios.interceptors.request.use((config) => {
-  const authStore = useAuthStore()
-  const token = authStore.auth.token
+apiClient.interceptors.request.use((config) => {
   config.headers['Access-Control-Allow-Origin'] = '*'
-  config.headers['Content-Type'] = 'application/json; charset=UTF-8'
-  if (token !== null || token !== undefined) {
-    config.headers['Authorization'] = `Bearer ${token}`
-  }
   return config
 })
 

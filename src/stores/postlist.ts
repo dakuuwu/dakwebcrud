@@ -21,23 +21,28 @@ interface postlistState {
 
 export const usePostsStore = defineStore('postlist', () => {
   const posts = reactive<postlistState>([])
-  function getPostFromStore() {
-    return posts.post
+  function getAllPosts() {
+    return posts
+  }
+  function getPostByTitle(title) {
+    ;() => {
+      for (let i = 0; i < posts.length; i++) {
+        if (posts.length[i].content.title.match(title)) return i
+      }
+    }
+  }
+  function getPostByID(id) {
+    ;() => {
+      for (let i = 0; i < posts.length; i++) {
+        if (posts.length[i].id.match(id)) return i
+      }
+    }
   }
   const setPostList = (plist: String[]) => {
     if (posts.length > 0) {
       posts.length = 0
     }
     posts.push(...plist)
-  }
-  const fetchPostList = async () => {
-    try {
-      const fetchPosts = await getPosts()
-      console.log(JSON.stringify(fetchPosts))
-      setPostList(fetchPosts)
-    } catch (e) {
-      alert(e)
-    }
   }
   const putUpdatedPost = async (updatedPost) => {
     try {
@@ -63,8 +68,10 @@ export const usePostsStore = defineStore('postlist', () => {
   }
   return {
     posts,
-    getPostFromStore,
-    fetchPostList,
+    getAllPosts,
+    getPostByTitle,
+    getPostByID,
+    setPostList,
     putUpdatedPost,
     deletePost
   }

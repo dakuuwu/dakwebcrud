@@ -1,3 +1,58 @@
+<script setup lang="ts">
+import {
+  TransitionRoot,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  DialogDescription
+} from '@headlessui/vue'
+import { useAuthStore } from '../../stores/auth.ts'
+import { usePostsStore } from '../../stores/postlist.ts'
+import { apiClient } from '../../services/api.ts'
+import axios from "axios"
+
+const emit = defineEmits(['closeModal'])
+
+const delPost = async (id) => {
+
+axios.delete(
+    'http://localhost:8080/deletepost/' + id,
+    {
+      headers: {
+        ["Authorization"]: `Bearer ${useAuthStore().auth.token}`
+      }
+    }
+)
+  .then((res) => {
+    if (res.status === 204) {
+      apiClient
+        .get('/posts')
+        .then((res) => {
+          if (res.status === 200) {
+            usePostsStore().setPostList(res.data)
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    }
+  })
+  .catch((err) => {
+    console.error(err)
+  })
+}
+
+
+const closeModal = () => {
+  emit('closeModal')
+}
+const props = defineProps({
+  toggle: Boolean,
+  deletionID: String,
+  postTitle: String
+})
+</script>
+
 <template>
   <TransitionRoot
     :show="props.toggle"
@@ -14,7 +69,7 @@
         <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
           <DialogPanel class="flex-col gap-5 flex w-full max-w-md rounded-xl bg-white p-4">
             <DialogTitle class="text-2xl font-semibold">Delete this post?</DialogTitle>
-            <DialogDescription> This will <b>permanently</b> delete the post. </DialogDescription>
+            <DialogDescription> This will <b>permanently</b> delete the post with title <i>"{{props.postTitle}}"</i> and ID: <i>{{ props.deletionID }}</i>. </DialogDescription>
             <div class="flex gap-4 justify-end">
               <button
                 class="p-2 rounded-xl bg-red-600 text-white font-semibold"
@@ -30,27 +85,3 @@
     </Dialog>
   </TransitionRoot>
 </template>
-
-<script setup>
-import {
-  TransitionRoot,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  DialogDescription
-} from '@headlessui/vue'
-import { usePostsStore } from '../../stores/postlist.ts'
-
-const emit = defineEmits(['closeModal'])
-
-const delPost = async (id) => {
-  usePostsStore().deletePost(id)
-}
-const closeModal = () => {
-  emit('closeModal')
-}
-const props = defineProps({
-  toggle: Boolean,
-  deletionID: String
-})
-</script>
