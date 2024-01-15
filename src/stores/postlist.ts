@@ -1,4 +1,5 @@
 import { reactive } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 import type { Post } from '@/typeDefinitions'
 
@@ -15,8 +16,10 @@ interface postlistState {
   }[]
 }
 
+let postlistInit : postlistState
+
 export const usePostsStore = defineStore('postlist', () => {
-  const postlist = reactive<postlistState>([])
+  const postlist = reactive<postlistState>(postlistInit)
   function getAllPosts() {
     return postlist
   }
