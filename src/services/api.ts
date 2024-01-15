@@ -1,8 +1,13 @@
 import axios from 'axios'
-import { toRaw } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { usePostsStore } from '@/stores/postlist'
+import { clientPostValidations } from '@/services/clientValidations'
+import type { DesctructuredPost } from '@/typeDefinitions'
+import router from '@/router'
+const cpv = clientPostValidations()
 
 export const apiClient = axios.create({
-  baseURL: 'http://localhost:8080'
+  baseURL: import.meta.env.VITE_BACKAPI_URL
 })
 
 apiClient.interceptors.request.use((config) => {
@@ -10,54 +15,122 @@ apiClient.interceptors.request.use((config) => {
   return config
 })
 
-export const login = async (credentials: { username: string; password: string }) => {
-  try {
-    const res = await axios.post(
-      'http://localhost:8080/token',
+export const login = async (usr: string, pwd: string) => {
+  await apiClient
+    .post(
+      '/token',
       {},
       {
         auth: {
-          username: credentials.username,
-          password: credentials.password
+          username: usr,
+          password: pwd
         }
       }
     )
-    return res
-  } catch (error) {
-    console.error('Error during login:', error)
-    throw error
-  }
+    .then((res) => {
+      if (res.status === 200) {
+        useAuthStore().setAuthToken(res.data)
+        useAuthStore().setAuthState(true)
+        useAuthStore().setErrorState(false)
+        router.push('/dashboard')
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+      useAuthStore().setErrorState(true)
+    })
 }
 
 export const getPosts = async () => {
-  try {
-    const response = await apiClient.get('/posts')
-    return response.data
-  } catch (error) {
-    console.error('Error during login:', error)
-    throw error
-  }
+  await apiClient
+    .get('/posts')
+    .then((res) => {
+      if (res.status === 200) {
+        usePostsStore().setPostList(res.data)
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 }
 
-export const editPost = async (updatedPost: Object) => {
-  try {
-    const res = await axios.put(
-      'http://localhost:8080/updatepost/' + updatedPost.id,
-      toRaw(updatedPost)
+export const addPost = async (
+  title: string,
+  imageurl: string,
+  smalldesc: string,
+  longdesc: string,
+  tags: string
+) => {
+  await apiClient
+    .post(
+      '/newpost',
+      {
+        content: {
+          title: cpv.titleVerifier(title),
+          imageurl: cpv.imgUrlVerifier(imageurl),
+          smalldesc: smalldesc,
+          longdesc: longdesc
+        },
+        tags: cpv.tagsVerifier(tags)
+      },
+      {
+        headers: {
+          ['Authorization']: `Bearer ${useAuthStore().auth.token}`
+        }
+      }
     )
-    return res
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+    .then((res) => {
+      if (res.status === 201) {
+        getPosts()
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 }
 
-export const deletePost = async (id: String) => {
-  try {
-    const res = await axios.delete('http://localhost:8080/deletepost/' + id)
-    return res
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+export const updatePost = async (updatedPost: DesctructuredPost) => {
+  apiClient
+    .put(
+      '/updatepost/' + updatedPost.id,
+      {
+        content: {
+          title: cpv.titleVerifier(updatedPost.title),
+          imageurl: cpv.imgUrlVerifier(updatedPost.imageurl),
+          smalldesc: updatedPost.smalldesc,
+          longdesc: updatedPost.longdesc
+        },
+        tags: cpv.tagsVerifier(updatedPost.tags)
+      },
+      {
+        headers: {
+          ['Authorization']: `Bearer ${useAuthStore().auth.token}`
+        }
+      }
+    )
+    .then((res) => {
+      if (res.status === 200) {
+        getPosts()
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
+export const deletePost = async (id: String | undefined) => {
+  await apiClient
+    .delete('/deletepost/' + id, {
+      headers: {
+        ['Authorization']: `Bearer ${useAuthStore().auth.token}`
+      }
+    })
+    .then((res) => {
+      if (res.status === 204) {
+        getPosts()
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 }

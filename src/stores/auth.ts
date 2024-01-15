@@ -4,12 +4,14 @@ import { defineStore } from 'pinia'
 interface AuthState {
   token: string | null
   isAuthenticated: boolean
+  loginError: boolean
 }
 
 export const useAuthStore = defineStore('auth', () => {
   const auth = reactive<AuthState>({
     token: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    loginError: false
   })
   const setAuthToken = (givenJWT: any) => {
     auth.token = givenJWT
@@ -24,11 +26,20 @@ export const useAuthStore = defineStore('auth', () => {
     return auth.isAuthenticated
   }
 
+  const setErrorState = (state: boolean) => {
+    auth.loginError = state
+  }
+  const getErrorState = () => {
+    return auth.loginError
+  }
+
   return {
     auth,
     setAuthToken,
     setAuthState,
     getAuthToken,
-    getAuthState
+    getAuthState,
+    getErrorState,
+    setErrorState
   }
 })

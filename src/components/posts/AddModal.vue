@@ -1,17 +1,7 @@
-<script setup>
-import {
-  TransitionRoot,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  DialogDescription
-} from '@headlessui/vue'
+<script setup lang="ts">
+import { TransitionRoot, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { ref } from 'vue'
-import { useAuthStore } from '../../stores/auth.ts'
-import { usePostsStore } from '../../stores/postlist.ts'
-import { apiClient } from '../../services/api.ts'
-import axios from 'axios'
-
+import { addPost } from '@/services/api'
 const emit = defineEmits(['closeModal'])
 
 const closeModal = () => {
@@ -26,65 +16,12 @@ const smalldesc = ref('')
 const longdesc = ref('')
 const tags = ref('')
 
-function titleVerifier(title) {
-  if (title.trim() === '') {
-    return 'Untitled'
-  } else {
-    return title
-  }
-}
-function tagsVerifier(tags) {
-  if (tags.trim() === '') {
-    return ['Untagged']
-  } else {
-    return tags.split(',')
-  }
-}
-
 const initializeData = () => {
   title.value = ''
   imageurl.value = ''
   smalldesc.value = ''
   longdesc.value = ''
   tags.value = ''
-}
-
-const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
-  axios
-    .post(
-      'http://localhost:8080/newpost',
-      {
-        content: {
-          title: titleVerifier(title),
-          imageurl: 'mockURL/img.png',
-          smalldesc: smalldesc,
-          longdesc: longdesc
-        },
-        tags: tagsVerifier(tags)
-      },
-      {
-        headers: {
-          ['Authorization']: `Bearer ${useAuthStore().auth.token}`
-        }
-      }
-    )
-    .then((res) => {
-      if (res.status === 201) {
-        apiClient
-          .get('/posts')
-          .then((res) => {
-            if (res.status === 200) {
-              usePostsStore().setPostList(res.data)
-            }
-          })
-          .catch((err) => {
-            console.error(err)
-          })
-      }
-    })
-    .catch((err) => {
-      console.error(err)
-    })
 }
 </script>
 

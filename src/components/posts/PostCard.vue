@@ -2,16 +2,7 @@
 import { ref } from 'vue'
 import DelModal from './DelModal.vue'
 import EditModal from './EditModal.vue'
-interface Posts {
-  id: String
-  content: {
-    title: String
-    imageurl: String
-    smalldesc: String
-    longdesc: String
-  }
-  tags: String[]
-}
+import type { Post } from '@/typeDefinitions'
 
 const delModalOpen = ref(false)
 const toggleDelModal = function () {
@@ -23,7 +14,7 @@ const toggleEditModal = function () {
   editModalOpen.value = !editModalOpen.value
 }
 
-const post = defineProps<Posts>()
+const post = defineProps<Post>()
 </script>
 
 <template>

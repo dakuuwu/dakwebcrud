@@ -1,20 +1,20 @@
-export const clientValidations = () => {
-  function imgUrlVerifier(imgUrl: String) {
+export const clientPostValidations = () => {
+  function imgUrlVerifier(imgUrl: string) {
     if (imgUrl.trim() === '') {
       return 'Missing Image'
     } else {
       return imgUrl
     }
   }
-  function titleVerifier(title: String) {
+  function titleVerifier(title: string) {
     if (title.trim() === '') {
       return 'Untitled'
     } else {
       return title
     }
   }
-  function tagsVerifier(tags: String) {
-    if (tags.trim() === '') {
+  function tagsVerifier(tags: string) {
+    if (tags!.trim() === '') {
       return ['Untagged']
     } else {
       return tags.split(',')

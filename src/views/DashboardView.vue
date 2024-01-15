@@ -5,7 +5,7 @@ import AddModal from '@/components/posts/AddModal.vue'
 import { onMounted, ref } from 'vue'
 import { apiClient } from '@/services/api'
 import { usePostsStore } from '../stores/postlist'
-const postList = usePostsStore()
+const postData = usePostsStore()
 
 const addModalOpen = ref(false)
 const toggleAddModal = function () {
@@ -17,7 +17,7 @@ onMounted(() => {
     .get('/posts')
     .then((res) => {
       if (res.status === 200) {
-        postList.setPostList(res.data)
+        postData.setPostList(res.data)
       }
     })
     .catch((err) => {
@@ -31,8 +31,8 @@ onMounted(() => {
       class="flex flex-col bg-slate-200 overflow-auto h-[90vh] w-[75vw] p-10 gap-2 shadow-xl rounded-xl"
     >
       <p
-        v-show="postList.posts.length === 0"
-        :class="postList.posts.length === 0 ? ' ' : ' absolute top-full'"
+        v-show="postData.postlist.length === 0"
+        :class="postData.postlist.length === 0 ? ' ' : ' absolute top-full'"
         class="text-center self-center content-center m-auto"
         key="emptyList"
       >
@@ -40,7 +40,7 @@ onMounted(() => {
       </p>
       <TransitionGroup name="fade">
         <PostCard
-          v-for="p in postList.posts"
+          v-for="p in postData.postlist"
           :key="p.id"
           :id="p.id"
           :content="p.content"
