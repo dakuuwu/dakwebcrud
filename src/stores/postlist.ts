@@ -1,5 +1,4 @@
 import { reactive } from 'vue'
-import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 import type { Post } from '@/typeDefinitions'
 
