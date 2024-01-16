@@ -1,79 +1,54 @@
-import { getPosts, editPost, deletePost } from '@/services/api'
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
+import type { Post } from '@/typeDefinitions'
 
 interface postlistState {
-  post:
-    | [
-        {
-          id: string
-          content: {
-            title: string
-            imageurl: string
-            smalldesc: string
-            longdesc: string
-          }
-          tags: []
-        }
-      ]
-    | []
+  post: {
+    id: string
+    content: {
+      title: string
+      imageUrl: string
+      shortDesc: string
+      longDesc: string
+    }
+    tags: string | string[]
+  }[]
 }
 
+const postlistInit : postlistState = []
+
 export const usePostsStore = defineStore('postlist', () => {
-  const posts = reactive<postlistState>([])
+  const postlist = reactive<postlistState>(postlistInit)
   function getAllPosts() {
-    return posts
+    return postlist
   }
-  function getPostByTitle(title) {
+  function getPostByTitle(title: string) {
     ;() => {
-      for (let i = 0; i < posts.length; i++) {
-        if (posts.length[i].content.title.match(title)) return i
+      for (let i = 0; i < postlist.post.length; i++) {
+        if (postlist.post[i].content.title.match(title)) return i
       }
     }
   }
-  function getPostByID(id) {
+  function getPostByID(id: string) {
     ;() => {
-      for (let i = 0; i < posts.length; i++) {
-        if (posts.length[i].id.match(id)) return i
+      for (let i = 0; i < postlist.post.length; i++) {
+        if (postlist.post[i].id.match(id)) return i
       }
     }
   }
-  const setPostList = (plist: String[]) => {
-    if (posts.length > 0) {
-      posts.length = 0
-    }
-    posts.push(...plist)
-  }
-  const putUpdatedPost = async (updatedPost) => {
-    try {
-      const putPost = await editPost(updatedPost)
-      console.log(putPost)
 
-      fetchPostList()
-    } catch (e) {
-      alert(e)
-      console.warn(updatedPost)
+  const setPostList = (plist: Post[]) => {
+    if (postlist.length > 0) {
+      postlist.length = 0
     }
-  }
-  const delPost = async (id) => {
-    try {
-      const delPost = await deletePost(id)
-      console.log(delPost)
-
-      fetchPostList()
-    } catch (e) {
-      alert(e)
-      console.warn()
-    }
+    postlist.push(...plist)
   }
   return {
-    posts,
+    postlist,
     getAllPosts,
     getPostByTitle,
     getPostByID,
-    setPostList,
-    putUpdatedPost,
-    deletePost
+    setPostList
   }
 })
 

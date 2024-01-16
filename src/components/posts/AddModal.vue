@@ -1,17 +1,7 @@
-<script setup>
-import {
-  TransitionRoot,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  DialogDescription
-} from '@headlessui/vue'
+<script setup lang="ts">
+import { TransitionRoot, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { ref } from 'vue'
-import { useAuthStore } from '../../stores/auth.ts'
-import { usePostsStore } from '../../stores/postlist.ts'
-import { apiClient } from '../../services/api.ts'
-import axios from 'axios'
-
+import { addPost } from '@/services/api'
 const emit = defineEmits(['closeModal'])
 
 const closeModal = () => {
@@ -21,70 +11,17 @@ const props = defineProps({
   toggle: Boolean
 })
 const title = ref('')
-const imageurl = ref('')
-const smalldesc = ref('')
-const longdesc = ref('')
+const imageUrl = ref('')
+const shortDesc = ref('')
+const longDesc = ref('')
 const tags = ref('')
-
-function titleVerifier(title) {
-  if (title.trim() === '') {
-    return 'Untitled'
-  } else {
-    return title
-  }
-}
-function tagsVerifier(tags) {
-  if (tags.trim() === '') {
-    return ['Untagged']
-  } else {
-    return tags.split(',')
-  }
-}
 
 const initializeData = () => {
   title.value = ''
-  imageurl.value = ''
-  smalldesc.value = ''
-  longdesc.value = ''
+  imageUrl.value = ''
+  shortDesc.value = ''
+  longDesc.value = ''
   tags.value = ''
-}
-
-const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
-  axios
-    .post(
-      'http://localhost:8080/newpost',
-      {
-        content: {
-          title: titleVerifier(title),
-          imageurl: 'mockURL/img.png',
-          smalldesc: smalldesc,
-          longdesc: longdesc
-        },
-        tags: tagsVerifier(tags)
-      },
-      {
-        headers: {
-          ['Authorization']: `Bearer ${useAuthStore().auth.token}`
-        }
-      }
-    )
-    .then((res) => {
-      if (res.status === 201) {
-        apiClient
-          .get('/posts')
-          .then((res) => {
-            if (res.status === 200) {
-              usePostsStore().setPostList(res.data)
-            }
-          })
-          .catch((err) => {
-            console.error(err)
-          })
-      }
-    })
-    .catch((err) => {
-      console.error(err)
-    })
 }
 </script>
 
@@ -106,7 +43,7 @@ const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
             <DialogTitle class="text-2xl font-semibold">Create new post</DialogTitle>
             <form
               @submit.prevent="
-                addPost(title, imageurl, smalldesc, longdesc, tags), initializeData()
+                addPost(title, imageUrl, shortDesc, longDesc, tags), initializeData()
               "
               class="flex flex-col gap-2"
             >
@@ -119,16 +56,16 @@ const addPost = (title, imageurl, smalldesc, longdesc, tags) => {
                 <input type="file" id="image" class="border p-2 rounded" disabled />
               </div>
               <div class="flex flex-col">
-                <label for="smalldesc">Short Description:</label>
-                <input v-model="smalldesc" type="text" id="smalldesc" class="border p-2 rounded" />
+                <label for="shortDesc">Short Description:</label>
+                <input v-model="shortDesc" type="text" id="shortDesc" class="border p-2 rounded" />
               </div>
               <div class="flex flex-col">
-                <label for="longdesc">Long Description:</label>
+                <label for="longDesc">Long Description:</label>
                 <textarea
-                  v-model="longdesc"
+                  v-model="longDesc"
                   rows="5"
-                  name="longdesc"
-                  id="longdesc"
+                  name="longDesc"
+                  id="longDesc"
                   class="border p-2 rounded"
                 />
               </div>
