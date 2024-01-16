@@ -4,7 +4,7 @@
         "content": {
             "title": "Test Post",
             "imageurl": "/img.png",
-            "smalldesc": "This is a test small description!",
+            "shortdesc": "This is a test small description!",
             "longdesc": "This is a test long description! In this one we will fit more text that might be used when the view allows it! Maybe I can ramble here and explain thought processes."
         },
         "tags": [
@@ -18,7 +18,7 @@
         "content": {
             "title": "Test Post",
             "imageurl": "/img.png",
-            "smalldesc": "This is a test small description!",
+            "shortdesc": "This is a test small description!",
             "longdesc": "This is a test long description! In this one we will fit more text that might be used when the view allows it! Maybe I can ramble here and explain thought processes."
         },
         "tags": [
@@ -31,7 +31,7 @@
         "content": {
             "title": "Test Post",
             "imageurl": "/img.png",
-            "smalldesc": "This is a test small description!",
+            "shortdesc": "This is a test small description!",
             "longdesc": "This is a test long description! In this one we will fit more text that might be used when the view allows it! Maybe I can ramble here and explain thought processes."
         },
         "tags": [
@@ -44,7 +44,7 @@
         "content": {
             "title": "Test Post",
             "imageurl": "/img.png",
-            "smalldesc": "This is a test small description!",
+            "shortdesc": "This is a test small description!",
             "longdesc": "This is a test long description! In this one we will fit more text that might be used when the view allows it! Maybe I can ramble here and explain thought processes."
         },
         "tags": [
@@ -57,7 +57,7 @@
         "content": {
             "title": "Test Post",
             "imageurl": "/img.png",
-            "smalldesc": "This is a test small description!",
+            "shortdesc": "This is a test small description!",
             "longdesc": "This is a test long description! In this one we will fit more text that might be used when the view allows it! Maybe I can ramble here and explain thought processes."
         },
         "tags": [
@@ -70,7 +70,7 @@
         "content": {
             "title": "Test Post",
             "imageurl": "/img.png",
-            "smalldesc": "This is a test small description!",
+            "shortdesc": "This is a test small description!",
             "longdesc": "This is a test long description! In this one we will fit more text that might be used when the view allows it! Maybe I can ramble here and explain thought processes."
         },
         "tags": [
@@ -83,7 +83,7 @@
         "content": {
             "title": "Test Post",
             "imageurl": "/img.png",
-            "smalldesc": "This is a test small description!",
+            "shortdesc": "This is a test small description!",
             "longdesc": "This is a test long description! In this one we will fit more text that might be used when the view allows it! Maybe I can ramble here and explain thought processes."
         },
         "tags": [
@@ -96,7 +96,7 @@
         "content": {
             "title": "Test Post",
             "imageurl": "/img.png",
-            "smalldesc": "This is a test small description!",
+            "shortdesc": "This is a test small description!",
             "longdesc": "This is a test long description! In this one we will fit more text that might be used when the view allows it! Maybe I can ramble here and explain thought processes."
         },
         "tags": [
@@ -109,7 +109,7 @@
         "content": {
             "title": "the title of the thing",
             "imageurl": "test URL thing",
-            "smalldesc": "hehe",
+            "shortdesc": "hehe",
             "longdesc": "longer hehe activities"
         },
         "tags": [
@@ -123,7 +123,7 @@
         "content": {
             "title": "holy shit grass snake",
             "imageurl": "test URL thing",
-            "smalldesc": "hehe",
+            "shortdesc": "hehe",
             "longdesc": "longer hehe activities"
         },
         "tags": [
@@ -137,7 +137,7 @@
         "content": {
             "title": "the title of the thing 3",
             "imageurl": "test URL thing",
-            "smalldesc": "hehe",
+            "shortdesc": "hehe",
             "longdesc": "longer hehe activities, does this work?"
         },
         "tags": [

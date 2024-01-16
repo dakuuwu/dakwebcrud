@@ -57,7 +57,7 @@ export const getPosts = async () => {
 export const addPost = async (
   title: string,
   imageurl: string,
-  smalldesc: string,
+  shortdesc: string,
   longdesc: string,
   tags: string
 ) => {
@@ -68,7 +68,7 @@ export const addPost = async (
         content: {
           title: cpv.titleVerifier(title),
           imageurl: cpv.imgUrlVerifier(imageurl),
-          smalldesc: smalldesc,
+          shortdesc: shortdesc,
           longdesc: longdesc
         },
         tags: cpv.tagsVerifier(tags)
@@ -97,7 +97,7 @@ export const updatePost = async (updatedPost: DesctructuredPost) => {
         content: {
           title: cpv.titleVerifier(updatedPost.title),
           imageurl: cpv.imgUrlVerifier(updatedPost.imageurl),
-          smalldesc: updatedPost.smalldesc,
+          shortdesc: updatedPost.shortdesc,
           longdesc: updatedPost.longdesc
         },
         tags: cpv.tagsVerifier(updatedPost.tags)

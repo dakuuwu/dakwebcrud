@@ -12,14 +12,14 @@ const props = defineProps({
 })
 const title = ref('')
 const imageurl = ref('')
-const smalldesc = ref('')
+const shortdesc = ref('')
 const longdesc = ref('')
 const tags = ref('')
 
 const initializeData = () => {
   title.value = ''
   imageurl.value = ''
-  smalldesc.value = ''
+  shortdesc.value = ''
   longdesc.value = ''
   tags.value = ''
 }
@@ -43,7 +43,7 @@ const initializeData = () => {
             <DialogTitle class="text-2xl font-semibold">Create new post</DialogTitle>
             <form
               @submit.prevent="
-                addPost(title, imageurl, smalldesc, longdesc, tags), initializeData()
+                addPost(title, imageurl, shortdesc, longdesc, tags), initializeData()
               "
               class="flex flex-col gap-2"
             >
@@ -56,8 +56,8 @@ const initializeData = () => {
                 <input type="file" id="image" class="border p-2 rounded" disabled />
               </div>
               <div class="flex flex-col">
-                <label for="smalldesc">Short Description:</label>
-                <input v-model="smalldesc" type="text" id="smalldesc" class="border p-2 rounded" />
+                <label for="shortdesc">Short Description:</label>
+                <input v-model="shortdesc" type="text" id="shortdesc" class="border p-2 rounded" />
               </div>
               <div class="flex flex-col">
                 <label for="longdesc">Long Description:</label>

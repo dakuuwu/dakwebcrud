@@ -25,7 +25,7 @@ const props = defineProps<Props>()
 const id = props.post!.id
 const title = props.post!.content.title
 const imageurl = 'mockURL/image.png'
-const smalldesc = props.post!.content.smalldesc
+const shortdesc = props.post!.content.shortdesc
 const longdesc = props.post!.content.longdesc
 const tags = props.post!.tags.toString()
 </script>
@@ -55,7 +55,7 @@ const tags = props.post!.tags.toString()
                   id: id,
                   title: title,
                   imageurl: imageurl,
-                  smalldesc: smalldesc,
+                  shortdesc: shortdesc,
                   longdesc: longdesc,
                   tags: tags
                 })
@@ -71,8 +71,8 @@ const tags = props.post!.tags.toString()
                 <input type="file" id="image" class="border p-2 rounded" disabled />
               </div>
               <div class="flex flex-col">
-                <label for="smalldesc">Short Description:</label>
-                <input v-model="smalldesc" type="text" id="smalldesc" class="border p-2 rounded" />
+                <label for="shortdesc">Short Description:</label>
+                <input v-model="shortdesc" type="text" id="shortdesc" class="border p-2 rounded" />
               </div>
               <div class="flex flex-col">
                 <label for="longdesc">Long Description:</label>

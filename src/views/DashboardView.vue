@@ -47,8 +47,8 @@ onMounted(() => {
           :tags="p.tags"
         />
       </TransitionGroup>
+      <AddPostButton @click="toggleAddModal" />
     </div>
-    <AddPostButton @click="toggleAddModal" />
     <AddModal :toggle="addModalOpen" @closeModal="toggleAddModal" />
   </div>
 </template>

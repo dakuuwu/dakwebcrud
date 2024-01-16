@@ -8,7 +8,7 @@ interface postlistState {
     content: {
       title: string
       imageurl: string
-      smalldesc: string
+      shortdesc: string
       longdesc: string
     }
     tags: string | string[]

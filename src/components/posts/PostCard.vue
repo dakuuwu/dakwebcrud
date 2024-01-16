@@ -24,7 +24,7 @@ const post = defineProps<Post>()
         <p class="self-end font-light text-gray-400">id: {{ post.id }}</p>
         <p><span class="font-bold">Title:</span> {{ post.content.title }}</p>
         <p><span class="font-bold">imageurl:</span> {{ post.content.imageurl }}</p>
-        <p><span class="font-bold">Small Description:</span> {{ post.content.smalldesc }}</p>
+        <p><span class="font-bold">Small Description:</span> {{ post.content.shortdesc }}</p>
         <p><span class="font-bold">Long Description:</span> {{ post.content.longdesc }}</p>
       </div>
       <div class="flex flex-row py-3 gap-5">
