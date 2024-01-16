@@ -15,7 +15,7 @@ interface postlistState {
   }[]
 }
 
-let postlistInit : postlistState
+const postlistInit : postlistState = []
 
 export const usePostsStore = defineStore('postlist', () => {
   const postlist = reactive<postlistState>(postlistInit)
@@ -38,10 +38,10 @@ export const usePostsStore = defineStore('postlist', () => {
   }
 
   const setPostList = (plist: Post[]) => {
-    if (postlist.post.length > 0) {
-      postlist.post.length = 0
+    if (postlist.length > 0) {
+      postlist.length = 0
     }
-    postlist.post.push(...plist)
+    postlist.push(...plist)
   }
   return {
     postlist,

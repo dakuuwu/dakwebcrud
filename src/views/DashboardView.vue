@@ -40,7 +40,7 @@ onMounted(() => {
       </p>
       <TransitionGroup name="fade">
         <PostCard
-          v-for="p in postData.postlist"
+          v-for="(p) in postData.postlist"
           :key="p.id"
           :id="p.id"
           :content="p.content"
