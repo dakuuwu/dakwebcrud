@@ -10,6 +10,10 @@ export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_BACKAPI_URL
 })
 
+export const pubClient = axios.create({
+  baseURL: import.meta.env.VITE_BACKAPI_URL
+})
+
 apiClient.interceptors.request.use((config) => {
   config.headers['Access-Control-Allow-Origin'] = '*'
   return config
@@ -56,9 +60,9 @@ export const getPosts = async () => {
 
 export const addPost = async (
   title: string,
-  imageurl: string,
-  shortdesc: string,
-  longdesc: string,
+  imageUrl: string,
+  shortDesc: string,
+  longDesc: string,
   tags: string
 ) => {
   await apiClient
@@ -67,9 +71,9 @@ export const addPost = async (
       {
         content: {
           title: cpv.titleVerifier(title),
-          imageurl: cpv.imgUrlVerifier(imageurl),
-          shortdesc: shortdesc,
-          longdesc: longdesc
+          imageUrl: cpv.imgUrlVerifier(imageUrl),
+          shortDesc: shortDesc,
+          longDesc: longDesc
         },
         tags: cpv.tagsVerifier(tags)
       },
@@ -96,9 +100,9 @@ export const updatePost = async (updatedPost: DesctructuredPost) => {
       {
         content: {
           title: cpv.titleVerifier(updatedPost.title),
-          imageurl: cpv.imgUrlVerifier(updatedPost.imageurl),
-          shortdesc: updatedPost.shortdesc,
-          longdesc: updatedPost.longdesc
+          imageUrl: cpv.imgUrlVerifier(updatedPost.imageUrl),
+          shortDesc: updatedPost.shortDesc,
+          longDesc: updatedPost.longDesc
         },
         tags: cpv.tagsVerifier(updatedPost.tags)
       },

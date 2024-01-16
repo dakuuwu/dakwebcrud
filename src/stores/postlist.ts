@@ -7,9 +7,9 @@ interface postlistState {
     id: string
     content: {
       title: string
-      imageurl: string
-      shortdesc: string
-      longdesc: string
+      imageUrl: string
+      shortDesc: string
+      longDesc: string
     }
     tags: string | string[]
   }[]

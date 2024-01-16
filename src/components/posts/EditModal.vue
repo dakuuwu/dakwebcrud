@@ -24,9 +24,9 @@ const props = defineProps<Props>()
 
 const id = props.post!.id
 const title = props.post!.content.title
-const imageurl = 'mockURL/image.png'
-const shortdesc = props.post!.content.shortdesc
-const longdesc = props.post!.content.longdesc
+const imageUrl = 'mockURL/image.png'
+const shortDesc = props.post!.content.shortDesc
+const longDesc = props.post!.content.longDesc
 const tags = props.post!.tags.toString()
 </script>
 
@@ -54,9 +54,9 @@ const tags = props.post!.tags.toString()
                 updatePost({
                   id: id,
                   title: title,
-                  imageurl: imageurl,
-                  shortdesc: shortdesc,
-                  longdesc: longdesc,
+                  imageUrl: imageUrl,
+                  shortDesc: shortDesc,
+                  longDesc: longDesc,
                   tags: tags
                 })
               "
@@ -71,16 +71,16 @@ const tags = props.post!.tags.toString()
                 <input type="file" id="image" class="border p-2 rounded" disabled />
               </div>
               <div class="flex flex-col">
-                <label for="shortdesc">Short Description:</label>
-                <input v-model="shortdesc" type="text" id="shortdesc" class="border p-2 rounded" />
+                <label for="shortDesc">Short Description:</label>
+                <input v-model="shortDesc" type="text" id="shortDesc" class="border p-2 rounded" />
               </div>
               <div class="flex flex-col">
-                <label for="longdesc">Long Description:</label>
+                <label for="longDesc">Long Description:</label>
                 <textarea
-                  v-model="longdesc"
+                  v-model="longDesc"
                   rows="5"
-                  name="longdesc"
-                  id="longdesc"
+                  name="longDesc"
+                  id="longDesc"
                   class="border p-2 rounded"
                 />
               </div>

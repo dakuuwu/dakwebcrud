@@ -1,3 +1,5 @@
+const tagsRegex = /(?:(?:[\w]+ *[\w.]*)+[^,. ]{1})|[\w]{1}/g
+
 export const clientPostValidations = () => {
   function imgUrlVerifier(imgUrl: string) {
     if (imgUrl.trim() === '') {
@@ -14,10 +16,10 @@ export const clientPostValidations = () => {
     }
   }
   function tagsVerifier(tags: string) {
-    if (tags!.trim() === '') {
+    if (tags!.trim() === '' || tags.match(tagsRegex) === null) {
       return ['Untagged']
     } else {
-      return tags.split(',')
+      return tags.match(tagsRegex)
     }
   }
 

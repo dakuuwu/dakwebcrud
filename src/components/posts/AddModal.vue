@@ -11,16 +11,16 @@ const props = defineProps({
   toggle: Boolean
 })
 const title = ref('')
-const imageurl = ref('')
-const shortdesc = ref('')
-const longdesc = ref('')
+const imageUrl = ref('')
+const shortDesc = ref('')
+const longDesc = ref('')
 const tags = ref('')
 
 const initializeData = () => {
   title.value = ''
-  imageurl.value = ''
-  shortdesc.value = ''
-  longdesc.value = ''
+  imageUrl.value = ''
+  shortDesc.value = ''
+  longDesc.value = ''
   tags.value = ''
 }
 </script>
@@ -43,7 +43,7 @@ const initializeData = () => {
             <DialogTitle class="text-2xl font-semibold">Create new post</DialogTitle>
             <form
               @submit.prevent="
-                addPost(title, imageurl, shortdesc, longdesc, tags), initializeData()
+                addPost(title, imageUrl, shortDesc, longDesc, tags), initializeData()
               "
               class="flex flex-col gap-2"
             >
@@ -56,16 +56,16 @@ const initializeData = () => {
                 <input type="file" id="image" class="border p-2 rounded" disabled />
               </div>
               <div class="flex flex-col">
-                <label for="shortdesc">Short Description:</label>
-                <input v-model="shortdesc" type="text" id="shortdesc" class="border p-2 rounded" />
+                <label for="shortDesc">Short Description:</label>
+                <input v-model="shortDesc" type="text" id="shortDesc" class="border p-2 rounded" />
               </div>
               <div class="flex flex-col">
-                <label for="longdesc">Long Description:</label>
+                <label for="longDesc">Long Description:</label>
                 <textarea
-                  v-model="longdesc"
+                  v-model="longDesc"
                   rows="5"
-                  name="longdesc"
-                  id="longdesc"
+                  name="longDesc"
+                  id="longDesc"
                   class="border p-2 rounded"
                 />
               </div>
