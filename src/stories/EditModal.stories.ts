@@ -1,14 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryObj } from '@storybook/vue3'
 
-import EditModal from '../components/posts/EditModal.vue';
-import postData from "./postData.json"
+import EditModal from '../components/posts/EditModal.vue'
 
 const meta: Meta<typeof EditModal> = {
-  component: EditModal,
-};
+  component: EditModal
+}
 
-export default meta;
-type Story = StoryObj<typeof EditModal>;
+export default meta
+type Story = StoryObj<typeof EditModal>
 
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
@@ -19,12 +18,21 @@ export const Primary: Story = {
   render: (args) => ({
     components: { EditModal },
     setup() {
-      return { args };
+      return { args }
     },
-    template: '<EditModal v-bind="args" />',
+    template: '<EditModal v-bind="args" />'
   }),
   args: {
     toggle: true,
-
-  },
-};
+    post: {
+      id: '',
+      content: {
+        title: '',
+        imageUrl: '',
+        shortDesc: '',
+        longDesc: ''
+      },
+      tags: ['']
+    }
+  }
+}

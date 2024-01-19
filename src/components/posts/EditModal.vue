@@ -8,6 +8,7 @@ import {
 } from '@headlessui/vue'
 import type { Post } from '@/typeDefinitions'
 import { updatePost } from '../../services/api'
+import { ref } from 'vue'
 
 const emit = defineEmits(['closeModal'])
 
@@ -22,12 +23,12 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const id = props.post!.id
-const title = props.post!.content.title
-const imageUrl = 'mockURL/image.png'
-const shortDesc = props.post!.content.shortDesc
-const longDesc = props.post!.content.longDesc
-const tags = props.post!.tags.toString()
+const id = ref(props.post!.id)
+const title = ref(props.post!.content.title)
+const imageUrl = ref('mockURL/image.png')
+const shortDesc = ref(props.post!.content.shortDesc)
+const longDesc = ref(props.post!.content.longDesc)
+const tags = ref(props.post!.tags.toString())
 </script>
 
 <template>

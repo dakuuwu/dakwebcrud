@@ -11,3 +11,7 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+html {
+  background-color: #10051b;
+}

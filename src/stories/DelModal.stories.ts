@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryObj } from '@storybook/vue3'
 
-import DelModal from '../components/posts/DelModal.vue';
-import postData from "./postData.json"
+import DelModal from '../components/posts/DelModal.vue'
+import postData from './postData.json'
 
 const meta: Meta<typeof DelModal> = {
-  component: DelModal,
-};
+  component: DelModal
+}
 
-export default meta;
-type Story = StoryObj<typeof DelModal>;
+export default meta
+type Story = StoryObj<typeof DelModal>
 
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
@@ -19,12 +19,13 @@ export const Primary: Story = {
   render: (args) => ({
     components: { DelModal },
     setup() {
-      return { args };
+      return { args }
     },
-    template: '<DelModal v-bind="args" />',
+    template: '<DelModal v-bind="args" />'
   }),
   args: {
     toggle: true,
-
-  },
-};
+    deletionID: 'delID',
+    postTitle: 'post Title'
+  }
+}

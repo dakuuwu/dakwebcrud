@@ -11,7 +11,7 @@ const tryLogin = () => {
 </script>
 
 <template>
-  <div class="bg-slate-200 fixed inset-0 flex flex-col w-screen items-center justify-center">
+  <div class="bg-slate-300 fixed inset-0 flex flex-col w-screen items-center justify-center">
     <div
       v-show="loginError"
       class="animate-pulse absolute align-middle flex gap-7 w-100 bg-red-700 p-2 text-white text-center inset-x-0 top-0 font-semibold"
@@ -21,7 +21,7 @@ const tryLogin = () => {
     </div>
     <form
       @submit.prevent="tryLogin()"
-      class="flex flex-col border border-slate-300 rounded-xl shadow p-8 w-fit content-around justify-center gap-4"
+      class="flex flex-col border bg-slate-200 border-slate-400 rounded-xl shadow p-8 w-fit content-around justify-center gap-4"
     >
       <div class="flex flex-col gap-1">
         <label for="username">Username:</label>

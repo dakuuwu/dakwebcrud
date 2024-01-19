@@ -20,6 +20,11 @@ interface Props {
   postTitle: string
 }
 
+const deleteAction = (deletionID: string) => {
+  deletePost(deletionID)
+  closeModal()
+}
+
 const props = defineProps<Props>()
 </script>
 
@@ -47,7 +52,7 @@ const props = defineProps<Props>()
             <div class="flex gap-4 justify-end">
               <button
                 class="p-2 rounded-xl bg-red-600 text-white font-semibold"
-                @click="deletePost(props.deletionID), closeModal"
+                @click="deleteAction(props.deletionID)"
               >
                 Delete
               </button>
